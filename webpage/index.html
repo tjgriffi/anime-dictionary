@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html ng-app='AnimeDictionary'>
 <head>
 	<title>Anime Dictionary</title>
-	<script async src="index.js"></script>
+	<script sync src="../node_modules/angular/angular.js"></script>
+	<script sync src="index.js"></script>
 </head>
 <body>
-	<h1>Hello, world!</h1>
-	<h2 id='date'></h2>
+	<h1>Anime Dictionary</h1>
+	
+	<div ng-controller="Main">
+		<input type="text" name="Anime Search bar" ng-model="v_animeTitle" placeholder="Type an Anime :)">
+		<button ng-click="animeSubmitClicked()">Submit</button>
+	</div>
 </body>
 </html>
