@@ -3,6 +3,13 @@ const express = require('express');
 const mysql = require('mysql');
 const app = express();
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+//  Create the connection to the mysql database containing the names of anime
 //  Mysql database connection
 var con = mysql.createConnection({
   host: "localhost",
@@ -14,10 +21,8 @@ var con = mysql.createConnection({
 // Variable that holds the sql query
 var sqlQuery = "";
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+con.connect(function(err){
+	if (err) throw err;
 });
 
 app.get('/', function(req, res){
@@ -31,7 +36,7 @@ app.listen(8080, function(){
 app.get('/findAnime', function(req, res){
 
 	// Adjust the sql query
-	sqlQuery = "SELECT * FROM animes WHERE name = '" +req.query.aTitle+"'";
+	sqlQuery = "SELECT * FROM animetable WHERE name = '" + req.query.aTitle + "'";
 
 	// Query the database and if the entry is found return that result
 	con.query(sqlQuery, function(err, result){
@@ -44,7 +49,7 @@ app.get('/findAnime', function(req, res){
 
 	console.log(req.query.aTitle);
 
-	res.send(req.query.aTitle);
+	// res.send(req.query.aTitle);
 });
 
 app.get('*', function(res){
@@ -52,17 +57,6 @@ app.get('*', function(res){
 	console.log('error');
 });
 
-//  Create the connection to the mysql database containing the names of anime
-// const conn = mysql.createConnection({
-
-// 	host: "localhost",
-// 	username: "root",
-// 	password: "B4l7o357"
-// });
-
-// conn.connect(function(err){
-// 	if (err) throw err;
-// });
 
 // function addAnimeQuery();
 

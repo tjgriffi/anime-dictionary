@@ -3,6 +3,7 @@
 <head>
 	<title>Anime Dictionary</title>
 	<script sync src="../node_modules/angular/angular.js"></script>
+	<script sync src="../node_modules/angular-sanitize/angular-sanitize.min.js"></script>
 	<script sync src="index.js"></script>
 </head>
 <body>
@@ -11,6 +12,10 @@
 	<div ng-controller="Main">
 		<input type="text" name="Anime Search bar" ng-model="v_animeTitle" placeholder="Type an Anime :)">
 		<button ng-click="animeSubmitClicked()">Submit</button>
+		<br>
+		<p ng-bind-html='animeTitle'></p>
+		<br>
+		<p ng-bind-html='animeDescription'></p>
 	</div>
 </body>
 </html>
