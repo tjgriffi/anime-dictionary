@@ -28,9 +28,6 @@ app.controller('Main', ['$scope', '$http', function($scope, $http){
 		animeTitle = $scope.v_animeTitle;
 		animeDescription = $scope.v_animeDescription;
 
-		console.log(animeTitle);
-		console.log(animeDescription);
-
 		// Send the http addanime message to the http server
 		$http.post('http://localhost:8080/addAnime', {aTitle: animeTitle,aDescription: animeDescription}).then( function(msg){
 			console.log(msg);
@@ -53,6 +50,18 @@ app.controller('Main', ['$scope', '$http', function($scope, $http){
 	}
 
 	// // Function for removing an anime
-	// $scope.removeAnime = function () {}
+	$scope.removeAnime = function () {
+
+		animeTitle = $scope.v_animeTitle;
+
+		// Make the http post to remove an enry from the anime table
+		$http.post('http://localhost:8080/removeAnime', {aTitle: animeTitle}).then( 
+			function(msg){
+				console.log(msg);
+			}, 
+			function(err){
+			throw err;
+		})
+	}
 }]
 );

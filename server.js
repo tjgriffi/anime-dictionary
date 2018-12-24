@@ -80,6 +80,19 @@ app.get('*', function(res){
 	console.log('error');
 });
 
-// function removeAnimeQuery();
+// Function for removing an anime from the database
+app.post('/removeAnime', function(req, res){
+	console.log(req.body.aTitle);
 
+	// Adjust the sql query to remove an entry
+	sqlQuery = "DELETE FROM animetable WHERE name ='"+req.body.aTitle+"'";
+
+	// Make the call to the database to remove the selected anime
+	con.query(sqlQuery, function(err, result){
+		if (err) {throw err;}
+		else{
+			res.send("Removed "+req.body.aTitle);
+		}
+	});
+})
 // function getAnimeTable();
