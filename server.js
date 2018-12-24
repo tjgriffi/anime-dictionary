@@ -1,7 +1,16 @@
 const http = require('http');
 const express = require('express');
+
+// Provides middle ware for successfully creating the body part of an http post req.
+const bodyParser = require('body-parser');
+
+// Allows the use of mysql queries 
 const mysql = require('mysql');
+
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -33,6 +42,7 @@ app.listen(8080, function(){
 	console.log('listening on port 8080');
 });
 
+// Function for finding the anime in the database
 app.get('/findAnime', function(req, res){
 
 	// Adjust the sql query
@@ -48,17 +58,27 @@ app.get('/findAnime', function(req, res){
 	});
 
 	console.log(req.query.aTitle);
+});
 
-	// res.send(req.query.aTitle);
+// Function for adding the anime to the database
+app.post('/addAnime', function(req, res){
+
+	// Adjust the sql query
+	sqlQuery = "INSERT INTO animetable (name, description) \nValues ('"+req.body.aTitle+"', '"+req.body.aDescription+"')";
+
+	// Make the call to add the anime into the database.
+	con.query(sqlQuery, function(err, result){
+		if (err) {throw err;}
+		else{
+			res.send("success");
+		}
+	});
 });
 
 app.get('*', function(res){
 
 	console.log('error');
 });
-
-
-// function addAnimeQuery();
 
 // function removeAnimeQuery();
 
